@@ -1,4 +1,4 @@
-const overlayInnerHTML = `
+const makeOverlayInnerHTML = (initialValue: number) => `
   <div class="dialog">
     <h2 class="dialog__title">Work 1 - Select a number</h2>
     <div class="dialog__body">
@@ -6,8 +6,8 @@ const overlayInnerHTML = `
         Move the slider (1 – 100):
       </label>
       <div class="slider-row">
-        <input class="slider" type="range" min="1" max="100" value="50" />
-        <span class="slider-value">50</span>
+        <input class="slider" type="range" min="1" max="100" value="${initialValue}" />
+        <span class="slider-value">${initialValue}</span>
       </div>
     </div>
     <div class="dialog__actions">
@@ -25,14 +25,11 @@ class SliderDialog {
   constructor(initialValue: number = 50) {
     this.overlay = document.createElement('div');
     this.overlay.className = 'dialog-overlay';
-    this.overlay.innerHTML = overlayInnerHTML;
+    this.overlay.innerHTML = makeOverlayInnerHTML(initialValue);
 
     this.slider = this.overlay.querySelector<HTMLInputElement>('.slider')!;
     this.valueLabel =
       this.overlay.querySelector<HTMLSpanElement>('.slider-value')!;
-
-    this.slider.value = String(initialValue);
-    this.valueLabel.textContent = String(initialValue);
   }
 
   private mount(): void {
