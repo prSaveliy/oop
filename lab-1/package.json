@@ -1,0 +1,25 @@
+{
+  "name": "lab-1",
+  "module": "index.ts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:preload": "bun build src/preload.ts --outfile dist/preload.js --target node --format cjs --external electron",
+    "build:renderer": "bun build src/renderer.ts --outfile dist/renderer.js --target browser",
+    "start": "bun run build:preload && bun run build:renderer && electron src/index.ts",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "electron": "^44.4.3",
+    "oxlint": "^1.83.0",
+    "prettier": "^3.9.8"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  }
+}
