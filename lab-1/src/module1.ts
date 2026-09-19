@@ -22,7 +22,7 @@ class SliderDialog {
   private slider: HTMLInputElement;
   private valueLabel: HTMLSpanElement;
 
-  constructor() {
+  constructor(initialValue: number = 50) {
     this.overlay = document.createElement('div');
     this.overlay.className = 'dialog-overlay';
     this.overlay.innerHTML = overlayInnerHTML;
@@ -30,6 +30,9 @@ class SliderDialog {
     this.slider = this.overlay.querySelector<HTMLInputElement>('.slider')!;
     this.valueLabel =
       this.overlay.querySelector<HTMLSpanElement>('.slider-value')!;
+
+    this.slider.value = String(initialValue);
+    this.valueLabel.textContent = String(initialValue);
   }
 
   private mount(): void {
@@ -70,6 +73,8 @@ class SliderDialog {
   }
 }
 
-export function showSliderDialog(): Promise<number | null> {
-  return new SliderDialog().show();
+export function showSliderDialog(
+  initialValue: number = 50,
+): Promise<number | null> {
+  return new SliderDialog(initialValue).show();
 }

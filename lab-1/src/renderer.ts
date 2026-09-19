@@ -6,6 +6,9 @@ class App {
   private result1El: HTMLElement;
   private result2El: HTMLElement;
 
+  private work1Value: number = 50;
+  private work2Value: string = '';
+
   constructor() {
     this.result1El = document.querySelector<HTMLElement>('#result-1')!;
     this.result2El = document.querySelector<HTMLElement>('#result-2')!;
@@ -15,14 +18,15 @@ class App {
   }
 
   private async handleWork1(): Promise<void> {
-    const result = await showSliderDialog();
+    const result = await showSliderDialog(this.work1Value);
     if (result !== null) {
-      this.result1El.textContent = `Work 1 result: ${result}`;
+      this.work1Value = result;
+      this.result1El.textContent = `Work 1 result: ${this.work1Value}`;
     }
   }
 
   private async handleWork2(): Promise<void> {
-    let step1Value = '';
+    let step1Value = this.work2Value;
 
     while (true) {
       const step1 = await showStep1Dialog(step1Value);
@@ -36,7 +40,8 @@ class App {
       if (step2 === 'cancel') return;
       if (step2 === 'back') continue;
 
-      this.result2El.textContent = `Work 2 result: ${step1Value || 'no value'}`;
+      this.work2Value = step1Value;
+      this.result2El.textContent = `Work 2 result: ${this.work2Value || 'no value'}`;
       return;
     }
   }
