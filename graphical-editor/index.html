@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Графічний редактор</title>
+    <link rel="stylesheet" href="src/styles/index.css" />
+  </head>
+  <body>
+    <div class="editor-container">
+      <canvas id="canvas"></canvas>
+      <footer class="status-bar">
+        <span id="status-mode" class="status-item">Режим: Крапка</span>
+        <span class="status-separator">|</span>
+        <span id="status-count" class="status-item">Об'єктів: 0/125</span>
+        <span class="status-separator">|</span>
+        <span id="status-coords" class="status-item">X: 0, Y: 0</span>
+        <span class="status-spacer"></span>
+        <span class="status-hint"
+          >Оберіть фігуру в меню "Об'єкти" або натисніть Ctrl+1..4</span
+        >
+      </footer>
+    </div>
+    <script type="module" src="dist/renderer.js"></script>
+  </body>
+</html>
