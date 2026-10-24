@@ -2,15 +2,13 @@ import { Shape } from './shape.ts';
 
 export class RectShape extends Shape {
   show(ctx: CanvasRenderingContext2D): void {
-    const dx = Math.abs(this.xs2 - this.xs1);
-    const dy = Math.abs(this.ys2 - this.ys1);
-    const left = this.xs1 - dx;
-    const top = this.ys1 - dy;
-    const width = dx * 2;
-    const height = dy * 2;
+    const left = Math.min(this.xs1, this.xs2);
+    const top = Math.min(this.ys1, this.ys2);
+    const width = Math.abs(this.xs2 - this.xs1);
+    const height = Math.abs(this.ys2 - this.ys1);
 
     ctx.save();
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#38bdf8';
     ctx.strokeStyle = '#000000';
     ctx.lineWidth = 1;
     ctx.beginPath();

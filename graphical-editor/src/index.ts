@@ -29,6 +29,9 @@ const createMenu = () => {
       label: "Об'єкти",
       submenu: [
         {
+          id: 'mode-point',
+          type: 'radio',
+          checked: true,
           label: 'Крапка',
           accelerator: 'CmdOrCtrl+1',
           click: () => {
@@ -36,6 +39,9 @@ const createMenu = () => {
           },
         },
         {
+          id: 'mode-line',
+          type: 'radio',
+          checked: false,
           label: 'Лінія',
           accelerator: 'CmdOrCtrl+2',
           click: () => {
@@ -43,6 +49,9 @@ const createMenu = () => {
           },
         },
         {
+          id: 'mode-rect',
+          type: 'radio',
+          checked: false,
           label: 'Прямокутник',
           accelerator: 'CmdOrCtrl+3',
           click: () => {
@@ -50,6 +59,9 @@ const createMenu = () => {
           },
         },
         {
+          id: 'mode-ellipse',
+          type: 'radio',
+          checked: false,
           label: 'Еліпс',
           accelerator: 'CmdOrCtrl+4',
           click: () => {
@@ -69,14 +81,15 @@ const createMenu = () => {
                 type: 'info',
                 title: 'Про програму',
                 message:
-                  'Лабораторна робота №2\nГрафічний редактор об’єктів на TypeScript + Electron',
+                  'Лабораторна робота №3\nГрафічний редактор об’єктів на TypeScript + Electron',
                 detail:
-                  'Варіант 25 (Присяжний С. О., група ІМ-55)\n\n' +
-                  '• Статичний масив: 125 об’єктів\n' +
-                  '• Гумовий слід: суцільна червона лінія\n' +
-                  '• Прямокутник: від центру до кута, біле заповнення\n' +
-                  '• Еліпс: по двох кутах охопл. прямокутника, без заповнення\n' +
-                  '• Позначка режиму: у заголовку вікна',
+                  'Варіант 26 (Присяжний С. О., група ІМ-55)\n\n' +
+                  '• Статичний масив: 126 об’єктів\n' +
+                  '• Гумовий слід: суцільна синя лінія\n' +
+                  '• Прямокутник: по двох протилежних кутах, блакитне заповнення\n' +
+                  '• Еліпс: від центру до кута охопл. прямокутника, біле заповнення\n' +
+                  '• Панель інструментів (Toolbar): кнопки з іконками, фіксація стану та підказки\n' +
+                  '• Позначка режиму: у меню (радіо-позначка) та на панелі інструментів',
               });
             }
           },
@@ -93,7 +106,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 700,
-    title: 'Графічний редактор — [Режим: Крапка]',
+    title: 'Графічний редактор - Лабораторна робота №3',
     webPreferences: {
       preload: path.join(process.cwd(), 'dist/preload.js'),
       contextIsolation: true,
@@ -102,13 +115,19 @@ const createWindow = () => {
   });
 
   mainWindow.loadFile(path.resolve(process.cwd(), 'index.html'));
-  mainWindow.webContents.openDevTools();
   createMenu();
 };
 
 ipcMain.on('window:set-title', (_event, title: string) => {
   if (mainWindow && title) {
     mainWindow.setTitle(title);
+  }
+});
+
+ipcMain.on('mode:changed', (_event, mode: string) => {
+  const item = Menu.getApplicationMenu()?.getMenuItemById(`mode-${mode}`);
+  if (item) {
+    item.checked = true;
   }
 });
 

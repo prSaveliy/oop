@@ -12,14 +12,16 @@ export class RectEditor extends ShapeEditor {
 
   override onPaint(ctx: CanvasRenderingContext2D): void {
     if (!this.isDrawing) return;
-    const dx = Math.abs(this.xend - this.xstart);
-    const dy = Math.abs(this.yend - this.ystart);
+    const left = Math.min(this.xstart, this.xend);
+    const top = Math.min(this.ystart, this.yend);
+    const width = Math.abs(this.xend - this.xstart);
+    const height = Math.abs(this.yend - this.ystart);
 
     ctx.save();
     ctx.strokeStyle = this.rubberColor;
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.strokeRect(this.xstart - dx, this.ystart - dy, dx * 2, dy * 2);
+    ctx.strokeRect(left, top, width, height);
     ctx.restore();
   }
 }

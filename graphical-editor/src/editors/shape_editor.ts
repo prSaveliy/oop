@@ -8,7 +8,7 @@ export abstract class ShapeEditor extends Editor {
   protected xend: number = 0;
   protected yend: number = 0;
 
-  protected readonly rubberColor: string = '#ef4444';
+  protected readonly rubberColor: string = '#2563eb';
 
   constructor(
     protected readonly onShapeCreated: (shape: Shape) => void,

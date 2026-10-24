@@ -10,4 +10,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   setWindowTitle: (title: string) => {
     ipcRenderer.send('window:set-title', title);
   },
+  notifyModeChanged: (mode: string) => {
+    ipcRenderer.send('mode:changed', mode);
+  },
 });

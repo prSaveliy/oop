@@ -9,6 +9,5 @@ export class PointEditor extends ShapeEditor {
     this.requestRepaint();
   }
 
-  override onPaint(_ctx: CanvasRenderingContext2D): void {
-  }
+  override onPaint(_ctx: CanvasRenderingContext2D): void {}
 }

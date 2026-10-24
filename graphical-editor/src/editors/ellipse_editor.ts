@@ -12,10 +12,8 @@ export class EllipseEditor extends ShapeEditor {
 
   override onPaint(ctx: CanvasRenderingContext2D): void {
     if (!this.isDrawing) return;
-    const cx = (this.xstart + this.xend) / 2;
-    const cy = (this.ystart + this.yend) / 2;
-    const rx = Math.abs(this.xend - this.xstart) / 2;
-    const ry = Math.abs(this.yend - this.ystart) / 2;
+    const rx = Math.abs(this.xend - this.xstart);
+    const ry = Math.abs(this.yend - this.ystart);
 
     if (rx === 0 && ry === 0) return;
 
@@ -23,7 +21,7 @@ export class EllipseEditor extends ShapeEditor {
     ctx.strokeStyle = this.rubberColor;
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.ellipse(this.xstart, this.ystart, rx, ry, 0, 0, Math.PI * 2);
     ctx.stroke();
     ctx.restore();
   }

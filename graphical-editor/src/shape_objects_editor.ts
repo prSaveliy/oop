@@ -8,16 +8,18 @@ import { EllipseEditor } from './editors/ellipse_editor.ts';
 export type ShapeMode = 'point' | 'line' | 'rect' | 'ellipse';
 
 export class ShapeObjectsEditor {
-  private readonly maxShapes: number = 125;
-  private pcshape: (Shape | null)[] = Array.from({ length: 125 }, () => null);
+  private readonly maxShapes: number = 126;
+  private pcshape: (Shape | null)[] = Array.from({ length: 126 }, () => null);
   private shapeCount: number = 0;
 
   private currentEditor: ShapeEditor | null = null;
+  private currentMode: ShapeMode = 'point';
   private currentModeName: string = 'Крапка';
 
   constructor(
     private readonly requestRepaint: () => void,
     private readonly onTitleChange: (title: string) => void,
+    private readonly onModeChange?: (mode: ShapeMode) => void,
   ) {
     this.startPointEditor();
   }
@@ -33,8 +35,10 @@ export class ShapeObjectsEditor {
       s => this.addShape(s),
       () => this.requestRepaint(),
     );
+    this.currentMode = 'point';
     this.currentModeName = 'Крапка';
     this.updateTitle();
+    this.onModeChange?.(this.currentMode);
   }
 
   startLineEditor(): void {
@@ -42,8 +46,10 @@ export class ShapeObjectsEditor {
       s => this.addShape(s),
       () => this.requestRepaint(),
     );
+    this.currentMode = 'line';
     this.currentModeName = 'Лінія';
     this.updateTitle();
+    this.onModeChange?.(this.currentMode);
   }
 
   startRectEditor(): void {
@@ -51,8 +57,10 @@ export class ShapeObjectsEditor {
       s => this.addShape(s),
       () => this.requestRepaint(),
     );
+    this.currentMode = 'rect';
     this.currentModeName = 'Прямокутник';
     this.updateTitle();
+    this.onModeChange?.(this.currentMode);
   }
 
   startEllipseEditor(): void {
@@ -60,8 +68,10 @@ export class ShapeObjectsEditor {
       s => this.addShape(s),
       () => this.requestRepaint(),
     );
+    this.currentMode = 'ellipse';
     this.currentModeName = 'Еліпс';
     this.updateTitle();
+    this.onModeChange?.(this.currentMode);
   }
 
   setMode(mode: ShapeMode): void {
@@ -83,7 +93,7 @@ export class ShapeObjectsEditor {
 
   private updateTitle(): void {
     this.onTitleChange(
-      `Графічний редактор — [Режим: ${this.currentModeName}] (Об'єктів: ${this.shapeCount}/${this.maxShapes})`,
+      `Графічний редактор — Лабораторна робота №3 (${this.shapeCount}/${this.maxShapes})`,
     );
   }
 
@@ -124,6 +134,10 @@ export class ShapeObjectsEditor {
 
   getMaxShapes(): number {
     return this.maxShapes;
+  }
+
+  getCurrentMode(): ShapeMode {
+    return this.currentMode;
   }
 
   getCurrentModeName(): string {

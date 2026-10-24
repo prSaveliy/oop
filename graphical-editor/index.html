@@ -8,19 +8,21 @@
   </head>
   <body>
     <div class="editor-container">
+      <header id="toolbar" class="toolbar"></header>
       <canvas id="canvas"></canvas>
       <footer class="status-bar">
         <span id="status-mode" class="status-item">Режим: Крапка</span>
         <span class="status-separator">|</span>
-        <span id="status-count" class="status-item">Об'єктів: 0/125</span>
+        <span id="status-count" class="status-item">Об'єктів: 0/126</span>
         <span class="status-separator">|</span>
         <span id="status-coords" class="status-item">X: 0, Y: 0</span>
         <span class="status-spacer"></span>
         <span class="status-hint"
-          >Оберіть фігуру в меню "Об'єкти" або натисніть Ctrl+1..4</span
+          >Оберіть фігуру в меню "Об'єкти" або на панелі інструментів</span
         >
       </footer>
     </div>
+    <div id="tooltip" class="tooltip" hidden></div>
     <script type="module" src="dist/renderer.js"></script>
   </body>
 </html>

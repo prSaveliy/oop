@@ -1,8 +1,16 @@
 {
   "name": "graphical-editor",
   "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "electron": "^44.4.3",
+    "oxlint": "^1.83.0",
+    "prettier": "^3.9.8"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
   "private": true,
-  "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build:preload": "bun build src/preload.ts --outfile dist/preload.js --target node --format cjs --external electron",
@@ -13,13 +21,5 @@
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "electron": "^44.4.3",
-    "oxlint": "^1.83.0",
-    "prettier": "^3.9.8"
-  },
-  "peerDependencies": {
-    "typescript": "^7"
-  }
+  "type": "module"
 }

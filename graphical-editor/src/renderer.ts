@@ -1,9 +1,11 @@
 import { ShapeObjectsEditor, type ShapeMode } from './shape_objects_editor.ts';
+import { ToolBar } from './toolbar.ts';
 
 class App {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private editor: ShapeObjectsEditor;
+  private toolbar: ToolBar;
   private statusCoords: HTMLElement;
   private statusMode: HTMLElement;
   private statusCount: HTMLElement;
@@ -23,7 +25,23 @@ class App {
           this.updateStatusBar();
         }
       },
+      mode => {
+        this.toolbar?.setActive(mode);
+        window.electronAPI?.notifyModeChanged(mode);
+      },
     );
+
+    this.toolbar = new ToolBar('#toolbar', '#tooltip', {
+      onSelectMode: mode => {
+        this.editor.setMode(mode);
+        this.updateStatusBar();
+        window.electronAPI?.notifyModeChanged(mode);
+      },
+      onClear: () => {
+        this.editor.clear();
+        this.updateStatusBar();
+      },
+    });
 
     this.initCanvasSize();
     this.bindEvents();
@@ -61,6 +79,7 @@ class App {
 
     window.electronAPI?.onSelectMode(mode => {
       this.editor.setMode(mode as ShapeMode);
+      this.toolbar.setActive(mode as ShapeMode);
       this.updateStatusBar();
     });
 
