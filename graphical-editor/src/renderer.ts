@@ -1,10 +1,10 @@
-import { ShapeObjectsEditor, type ShapeMode } from './shape_objects_editor.ts';
+import { MyEditor, type ShapeMode } from './my_editor.ts';
 import { ToolBar } from './toolbar.ts';
 
 class App {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
-  private editor: ShapeObjectsEditor;
+  private editor: MyEditor;
   private toolbar: ToolBar;
   private statusCoords: HTMLElement;
   private statusMode: HTMLElement;
@@ -17,7 +17,7 @@ class App {
     this.statusMode = document.querySelector<HTMLElement>('#status-mode')!;
     this.statusCount = document.querySelector<HTMLElement>('#status-count')!;
 
-    this.editor = new ShapeObjectsEditor(
+    this.editor = MyEditor.getInstance(
       () => this.repaint(),
       title => {
         window.electronAPI?.setWindowTitle(title);

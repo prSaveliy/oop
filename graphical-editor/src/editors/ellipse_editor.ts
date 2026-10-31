@@ -20,6 +20,7 @@ export class EllipseEditor extends ShapeEditor {
     ctx.save();
     ctx.strokeStyle = this.rubberColor;
     ctx.lineWidth = 1;
+    ctx.setLineDash([6, 6]);
     ctx.beginPath();
     ctx.ellipse(this.xstart, this.ystart, rx, ry, 0, 0, Math.PI * 2);
     ctx.stroke();

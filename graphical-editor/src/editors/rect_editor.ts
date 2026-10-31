@@ -20,6 +20,7 @@ export class RectEditor extends ShapeEditor {
     ctx.save();
     ctx.strokeStyle = this.rubberColor;
     ctx.lineWidth = 1;
+    ctx.setLineDash([6, 6]);
     ctx.beginPath();
     ctx.strokeRect(left, top, width, height);
     ctx.restore();

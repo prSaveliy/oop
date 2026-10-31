@@ -68,6 +68,26 @@ const createMenu = () => {
             mainWindow?.webContents.send('menu:mode', 'ellipse');
           },
         },
+        {
+          id: 'mode-lineOO',
+          type: 'radio',
+          checked: false,
+          label: 'Лінія з кружечками',
+          accelerator: 'CmdOrCtrl+5',
+          click: () => {
+            mainWindow?.webContents.send('menu:mode', 'lineOO');
+          },
+        },
+        {
+          id: 'mode-cube',
+          type: 'radio',
+          checked: false,
+          label: 'Каркас куба',
+          accelerator: 'CmdOrCtrl+6',
+          click: () => {
+            mainWindow?.webContents.send('menu:mode', 'cube');
+          },
+        },
       ],
     },
     {
@@ -81,14 +101,15 @@ const createMenu = () => {
                 type: 'info',
                 title: 'Про програму',
                 message:
-                  'Лабораторна робота №3\nГрафічний редактор об’єктів на TypeScript + Electron',
+                  'Лабораторна робота №4\nВдосконалення структури коду графічного редактора об’єктів',
                 detail:
-                  'Варіант 26 (Присяжний С. О., група ІМ-55)\n\n' +
+                  'Варіант 25 (Присяжний С. О., група ІМ-55)\n\n' +
+                  '• Статичний глобальний об’єкт MyEditor\n' +
                   '• Статичний масив: 126 об’єктів\n' +
-                  '• Гумовий слід: суцільна синя лінія\n' +
-                  '• Прямокутник: по двох протилежних кутах, блакитне заповнення\n' +
-                  '• Еліпс: від центру до кута охопл. прямокутника, біле заповнення\n' +
-                  '• Панель інструментів (Toolbar): кнопки з іконками, фіксація стану та підказки\n' +
+                  '• Гумовий слід: пунктирна лінія (#2563eb)\n' +
+                  '• Лінія з кружечками (LineOOShape): множинне спадкування від LineShape та EllipseShape\n' +
+                  '• Каркас куба (CubeShape): множинне спадкування від RectShape та LineShape\n' +
+                  '• Панель інструментів (Toolbar): 6 кнопок із підказками та фіксацією стану\n' +
                   '• Позначка режиму: у меню (радіо-позначка) та на панелі інструментів',
               });
             }
@@ -106,7 +127,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 700,
-    title: 'Графічний редактор - Лабораторна робота №3',
+    title: 'Графічний редактор — Лабораторна робота №4',
     webPreferences: {
       preload: path.join(process.cwd(), 'dist/preload.js'),
       contextIsolation: true,

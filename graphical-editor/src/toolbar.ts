@@ -1,4 +1,4 @@
-import type { ShapeMode } from './shape_objects_editor.ts';
+import type { ShapeMode } from './my_editor.ts';
 
 export interface ToolBarCallbacks {
   onSelectMode: (mode: ShapeMode) => void;
@@ -43,6 +43,18 @@ export class ToolBar {
       name: 'Еліпс',
       tooltip: 'Еліпс (Ctrl+4)',
       svg: '<svg viewBox="0 0 24 24" width="18" height="18"><ellipse cx="12" cy="12" rx="9" ry="6" fill="#ffffff" stroke="currentColor" stroke-width="2"/></svg>',
+    },
+    {
+      id: 'lineOO',
+      name: 'Лінія з кружечками',
+      tooltip: 'Лінія з кружечками (Ctrl+5)',
+      svg: '<svg viewBox="0 0 24 24" width="18" height="18"><line x1="6" y1="18" x2="18" y2="6" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="3" fill="#ffffff" stroke="currentColor" stroke-width="1.5"/></svg>',
+    },
+    {
+      id: 'cube',
+      name: 'Каркас куба',
+      tooltip: 'Каркас куба (Ctrl+6)',
+      svg: '<svg viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="8" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="4" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="8" x2="9" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="8" x2="20" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="19" x2="9" y2="15" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="19" x2="20" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>',
     },
     {
       id: 'clear',

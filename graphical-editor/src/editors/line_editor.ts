@@ -15,6 +15,7 @@ export class LineEditor extends ShapeEditor {
     ctx.save();
     ctx.strokeStyle = this.rubberColor;
     ctx.lineWidth = 1;
+    ctx.setLineDash([6, 6]);
     ctx.beginPath();
     ctx.moveTo(this.xstart, this.ystart);
     ctx.lineTo(this.xend, this.yend);
