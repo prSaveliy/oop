@@ -2,14 +2,18 @@ import type { ShapeMode } from './my_editor.ts';
 
 export interface ToolBarCallbacks {
   onSelectMode: (mode: ShapeMode) => void;
+  onToggleTable: () => void;
   onClear: () => void;
 }
 
+type ToolButtonId = ShapeMode | 'table' | 'clear';
+
 interface ToolButtonConfig {
-  id: ShapeMode | 'clear';
+  id: ToolButtonId;
   name: string;
   tooltip: string;
   isAction?: boolean;
+  hasSeparatorBefore?: boolean;
   svg: string;
 }
 
@@ -17,6 +21,7 @@ export class ToolBar {
   private container: HTMLElement;
   private tooltipEl: HTMLElement;
   private buttons: Map<string, HTMLButtonElement> = new Map();
+  private readonly actionIds: Set<string> = new Set();
   private activeMode: ShapeMode = 'point';
 
   private readonly tools: ToolButtonConfig[] = [
@@ -57,6 +62,14 @@ export class ToolBar {
       svg: '<svg viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="8" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="4" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="8" x2="9" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="8" x2="20" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="19" x2="9" y2="15" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="19" x2="20" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>',
     },
     {
+      id: 'table',
+      name: "Таблиця об'єктів",
+      tooltip: "Таблиця об'єктів (Ctrl+T)",
+      isAction: true,
+      hasSeparatorBefore: true,
+      svg: '<svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4" width="18" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.8"/><line x1="3" y1="14.5" x2="21" y2="14.5" stroke="currentColor" stroke-width="1.4"/><line x1="10" y1="9" x2="10" y2="20" stroke="currentColor" stroke-width="1.4"/><line x1="15.5" y1="9" x2="15.5" y2="20" stroke="currentColor" stroke-width="1.4"/></svg>',
+    },
+    {
       id: 'clear',
       name: 'Очистити',
       tooltip: 'Очистити полотно (Ctrl+N)',
@@ -79,12 +92,17 @@ export class ToolBar {
 
   private render(): void {
     this.container.innerHTML = '';
+    this.actionIds.clear();
 
     for (const config of this.tools) {
-      if (config.isAction) {
+      if (config.hasSeparatorBefore) {
         const sep = document.createElement('div');
         sep.className = 'toolbar-separator';
         this.container.appendChild(sep);
+      }
+
+      if (config.isAction) {
+        this.actionIds.add(config.id);
       }
 
       const btn = document.createElement('button');
@@ -96,7 +114,9 @@ export class ToolBar {
 
       btn.addEventListener('click', () => {
         if (config.isAction) {
-          if (config.id === 'clear') {
+          if (config.id === 'table') {
+            this.callbacks.onToggleTable();
+          } else if (config.id === 'clear') {
             this.callbacks.onClear();
           }
         } else {
@@ -121,6 +141,9 @@ export class ToolBar {
   setActive(mode: ShapeMode): void {
     this.activeMode = mode;
     this.buttons.forEach((btn, id) => {
+      if (this.actionIds.has(id)) {
+        return;
+      }
       if (id === mode) {
         btn.classList.add('is-pressed');
         btn.setAttribute('aria-pressed', 'true');
@@ -129,6 +152,15 @@ export class ToolBar {
         btn.setAttribute('aria-pressed', 'false');
       }
     });
+  }
+
+  setTableOpen(open: boolean): void {
+    const tableBtn = this.buttons.get('table');
+    if (!tableBtn) {
+      return;
+    }
+    tableBtn.classList.toggle('is-pressed', open);
+    tableBtn.setAttribute('aria-pressed', open ? 'true' : 'false');
   }
 
   getActiveMode(): ShapeMode {

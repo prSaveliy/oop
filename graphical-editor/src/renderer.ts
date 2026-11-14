@@ -1,4 +1,5 @@
-import { MyEditor, type ShapeMode } from './my_editor.ts';
+import { MyEditor } from './my_editor.ts';
+import { isShapeMode } from './editors/editor_registry.ts';
 import { ToolBar } from './toolbar.ts';
 
 class App {
@@ -17,19 +18,7 @@ class App {
     this.statusMode = document.querySelector<HTMLElement>('#status-mode')!;
     this.statusCount = document.querySelector<HTMLElement>('#status-count')!;
 
-    this.editor = MyEditor.getInstance(
-      () => this.repaint(),
-      title => {
-        window.electronAPI?.setWindowTitle(title);
-        if (this.editor) {
-          this.updateStatusBar();
-        }
-      },
-      mode => {
-        this.toolbar?.setActive(mode);
-        window.electronAPI?.notifyModeChanged(mode);
-      },
-    );
+    this.editor = MyEditor.getInstance();
 
     this.toolbar = new ToolBar('#toolbar', '#tooltip', {
       onSelectMode: mode => {
@@ -37,8 +26,36 @@ class App {
         this.updateStatusBar();
         window.electronAPI?.notifyModeChanged(mode);
       },
+      onToggleTable: () => {
+        window.electronAPI?.toggleTable();
+      },
       onClear: () => {
         this.editor.clear();
+        this.updateStatusBar();
+      },
+    });
+
+    this.editor.configure({
+      requestRepaint: () => this.repaint(),
+      onTitleChange: title => {
+        window.electronAPI?.setWindowTitle(title);
+        if (this.editor) {
+          this.updateStatusBar();
+        }
+      },
+      onModeChange: mode => {
+        this.toolbar?.setActive(mode);
+        window.electronAPI?.notifyModeChanged(mode);
+      },
+      onShapeAdded: record => {
+        window.electronAPI?.notifyShapeAdded(record);
+        this.updateStatusBar();
+      },
+      onShapesReplaced: records => {
+        window.electronAPI?.notifyShapesReplaced(
+          records,
+          this.editor.getSelectedIndex(),
+        );
         this.updateStatusBar();
       },
     });
@@ -78,14 +95,39 @@ class App {
     });
 
     window.electronAPI?.onSelectMode(mode => {
-      this.editor.setMode(mode as ShapeMode);
-      this.toolbar.setActive(mode as ShapeMode);
+      if (!isShapeMode(mode)) {
+        return;
+      }
+      this.editor.setMode(mode);
+      this.toolbar.setActive(mode);
       this.updateStatusBar();
     });
 
     window.electronAPI?.onClear(() => {
       this.editor.clear();
       this.updateStatusBar();
+    });
+
+    window.electronAPI?.onTableStateChanged(isOpen => {
+      this.toolbar.setTableOpen(isOpen);
+    });
+
+    window.electronAPI?.onTableSelectRow(index => {
+      this.editor.setSelectedIndex(index);
+    });
+
+    window.electronAPI?.onTableDeleteRow(index => {
+      this.editor.removeShapeAt(index);
+      this.updateStatusBar();
+    });
+
+    window.electronAPI?.onLoadShapes(rows => {
+      this.editor.loadFromRecords(rows);
+      this.updateStatusBar();
+    });
+
+    window.electronAPI?.onSaveShapesRequest(() => {
+      window.electronAPI?.sendShapesForSave(this.editor.getRecords());
     });
   }
 

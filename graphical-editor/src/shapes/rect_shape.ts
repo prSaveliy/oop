@@ -3,6 +3,10 @@ import { Shape } from './shape.ts';
 export class RectShape extends Shape {
   protected fillStyle: string = '#38bdf8';
 
+  override getName(): string {
+    return 'Прямокутник';
+  }
+
   show(ctx: CanvasRenderingContext2D): void {
     const left = Math.min(this.xs1, this.xs2);
     const top = Math.min(this.ys1, this.ys2);

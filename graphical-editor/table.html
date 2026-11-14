@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Таблиця об'єктів</title>
+    <link rel="stylesheet" href="src/styles/table.css" />
+  </head>
+  <body>
+    <div class="table-window">
+      <div id="table-scroll" class="table-scroll">
+        <table class="objects-table" aria-label="Таблиця об'єктів">
+          <thead>
+            <tr>
+              <th>Назва</th>
+              <th>x1</th>
+              <th>y1</th>
+              <th>x2</th>
+              <th>y2</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <div class="table-status">
+          <span id="table-count">Об'єктів: 0</span>
+          <span id="table-selection">Вибрано: —</span>
+        </div>
+        <div class="table-actions">
+          <button
+            id="btn-delete"
+            class="table-btn table-btn-danger"
+            type="button"
+            disabled
+          >
+            Видалити (Del)
+          </button>
+          <button id="btn-close" class="table-btn" type="button">
+            Закрити
+          </button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="dist/table_renderer.js"></script>
+  </body>
+</html>

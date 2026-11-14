@@ -1,6 +1,10 @@
 import { Shape } from './shape.ts';
 
 export class LineShape extends Shape {
+  override getName(): string {
+    return 'Лінія';
+  }
+
   show(ctx: CanvasRenderingContext2D): void {
     ctx.save();
     ctx.strokeStyle = '#000000';

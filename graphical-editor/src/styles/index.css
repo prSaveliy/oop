@@ -66,7 +66,8 @@ body {
   border-color: #cbd5e1;
 }
 
-.toolbar-btn.is-pressed {
+.toolbar-btn.is-pressed,
+.toolbar-btn.is-pressed:hover {
   background-color: var(--color-toolbar-btn-active);
   border-color: var(--color-toolbar-border-active);
   color: var(--color-accent);

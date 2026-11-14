@@ -1,6 +1,21 @@
-import { Shape } from './shape.ts';
+import { Shape, type HighlightBounds } from './shape.ts';
 
 export class EllipseShape extends Shape {
+  override getName(): string {
+    return 'Еліпс';
+  }
+
+  override getHighlightBounds(): HighlightBounds {
+    const rx = Math.abs(this.xs2 - this.xs1);
+    const ry = Math.abs(this.ys2 - this.ys1);
+    return {
+      left: this.xs1 - rx,
+      top: this.ys1 - ry,
+      width: rx * 2,
+      height: ry * 2,
+    };
+  }
+
   show(ctx: CanvasRenderingContext2D): void {
     const rx = Math.abs(this.xs2 - this.xs1);
     const ry = Math.abs(this.ys2 - this.ys1);
