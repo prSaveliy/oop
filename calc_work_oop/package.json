@@ -1,0 +1,29 @@
+{
+  "name": "calc-work-oop",
+  "version": "1.0.0",
+  "description": "OOP Calculation-Graphic Work (Task 3): Delimited ASCII Table Viewer & Editor",
+  "private": true,
+  "type": "module",
+  "main": "dist/main.js",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:main": "esbuild src/main/index.ts --bundle --platform=node --format=esm --external:electron --outfile=dist/main.js",
+    "build:preload": "esbuild src/preload/preload.ts --bundle --platform=node --format=cjs --external:electron --outfile=dist/preload.js",
+    "build:renderer": "esbuild src/renderer/renderer.ts --bundle --platform=browser --format=esm --outfile=dist/renderer.js",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "start": "npm run build && electron dist/main.js",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "electron": "^44.4.3",
+    "esbuild": "^0.28.2",
+    "oxlint": "^1.83.0",
+    "prettier": "^3.9.8",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Таблиця</title>
+    <link rel="stylesheet" href="src/renderer/styles/index.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="toolbar" role="toolbar" aria-label="Панель дій">
+        <button
+          id="btn-new"
+          class="toolbar-btn"
+          type="button"
+          title="Створити нову таблицю (Ctrl+N)"
+        >
+          Нова
+        </button>
+        <button
+          id="btn-open"
+          class="toolbar-btn"
+          type="button"
+          title="Відкрити TSV-файл (Ctrl+O)"
+        >
+          Відкрити
+        </button>
+        <button
+          id="btn-save"
+          class="toolbar-btn"
+          type="button"
+          title="Записати файл (Ctrl+S)"
+          disabled
+        >
+          Записати
+        </button>
+        <span class="toolbar-separator" aria-hidden="true"></span>
+        <button
+          id="btn-add-row"
+          class="toolbar-btn"
+          type="button"
+          title="Додати рядок (Ctrl+Enter)"
+          disabled
+        >
+          + Рядок
+        </button>
+        <button
+          id="btn-delete-row"
+          class="toolbar-btn toolbar-btn-danger"
+          type="button"
+          title="Видалити вибраний рядок (Delete)"
+          disabled
+        >
+          − Рядок
+        </button>
+        <button
+          id="btn-add-col"
+          class="toolbar-btn"
+          type="button"
+          title="Додати стовпчик"
+          disabled
+        >
+          + Стовпчик
+        </button>
+      </header>
+
+      <main id="table-container" class="table-container"></main>
+
+      <footer class="status-bar">
+        <span id="status-rows" class="status-item">Рядків: 0</span>
+        <span class="status-separator">|</span>
+        <span id="status-cols" class="status-item">Стовпців: 0</span>
+        <span class="status-separator">|</span>
+        <span id="status-sort" class="status-item"
+          >Сортування: без сортування</span
+        >
+        <span class="status-separator">|</span>
+        <span id="status-encoding" class="status-item">Кодування: —</span>
+        <span class="status-spacer"></span>
+        <span class="status-hint"
+          >ПКМ по заголовку — сортування | Подвійний клік — редагування</span
+        >
+      </footer>
+    </div>
+    <script type="module" src="dist/renderer.js"></script>
+  </body>
+</html>
